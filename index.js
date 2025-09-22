@@ -1,27 +1,33 @@
 import express from "express";
 
 const app = express();
-const port = 3000;
+const PORT = process.env.PORT || 3000;
 
-// GCD + LCM functions
-function gcd(a, b) {
-  return b === 0 ? a : gcd(b, a % b);
-}
-function lcm(a, b) {
+// GCD using Euclidean algorithm with BigInt
+const gcd = (a, b) => (b === 0n ? a : gcd(b, a % b));
+
+// LCM using BigInt
+const lcm = (a, b) => {
+  if (a === 0n || b === 0n) return 0n;
   return (a * b) / gcd(a, b);
-}
+};
 
 app.get("/gedeikissimas_gmail_com", (req, res) => {
-  const x = Number(req.query.x);
-  const y = Number(req.query.y);
+  try {
+    const x = BigInt(req.query.x);
+    const y = BigInt(req.query.y);
 
-  if (!Number.isInteger(x) || !Number.isInteger(y) || x <= 0 || y <= 0) {
-    return res.send("NaN");
+    if (x < 0n || y < 0n) {
+      return res.send("NaN");
+    }
+
+    const result = lcm(x, y);
+    res.send(result.toString()); 
+  } catch (err) {
+    res.send("NaN");
   }
-
-  res.send(String(lcm(x, y)));
 });
 
-app.listen(port, () => {
-  console.log(`Server running at http://localhost:${port}/gedeikissimas_gmail_com`);
+app.listen(PORT, () => {
+  console.log(`Server running at http://localhost:${PORT}/gedeikissimas_gmail_com?x=12&y=18`);
 });
