@@ -13,7 +13,7 @@ const lcm = (a, b) => {
   return (a * b) / gcd(a, b);
 };
 
-app.get("/gedeikissimas_gmail_com", (req, res) => {
+app.get("/task3/gedeikissimas_gmail_com", (req, res) => {
   try {
     const x = BigInt(req.query.x);
     const y = BigInt(req.query.y);
