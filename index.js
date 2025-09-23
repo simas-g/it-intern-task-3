@@ -8,8 +8,8 @@ const gcd = (a, b) => (b === 0n ? a : gcd(b, a % b));
 
 // LCM using BigInt
 const lcm = (a, b) => {
-  if (a === 0n) return b;
-  else if ( b === 0n) return a
+  if (a === 0n) return a;
+  else if ( b === 0n) return b
   return (a * b) / gcd(a, b);
 };
 
@@ -18,7 +18,7 @@ app.get("/task3/gedeikissimas_gmail_com", (req, res) => {
     const x = BigInt(req.query.x);
     const y = BigInt(req.query.y);
 
-    if (x < 0n || y < 0n) {
+    if (x < 0n || y < 0n || isNaN(x) || isNaN(y)) {
       return res.send("NaN");
     }
 
